@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_064238) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_20_065035) do
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "teacher_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["teacher_id"], name: "index_bookings_on_teacher_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -39,5 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_064238) do
     t.string "password_digest"
   end
 
+  add_foreign_key "bookings", "teachers"
+  add_foreign_key "bookings", "users"
   add_foreign_key "teachers", "users"
 end
