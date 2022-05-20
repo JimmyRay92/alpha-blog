@@ -1,0 +1,22 @@
+<%# Menu View for anyone with an account and is logged-in %>
+<div class="nav-item dropdown pr-sm-5"  >
+  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+    <%= current_user.fullname %>
+  </a>
+  <%# Main drop-down menu %>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+    <%= link_to "Home", teachers_path, class: "dropdown-item" %>
+    <%= link_to "Student", student_view_path, class: "dropdown-item" %>
+
+        <%# Changes the menu item depending on whether the user has a Teacher Profile %>
+        <% if user_signed_in? && current_user.teacher %>
+          <%= link_to "Teacher", teacher_view_path, class: "dropdown-item" %>
+        <% else %>
+          <%= link_to "Become A Teacher", new_teacher_path, class: "dropdown-item" %>
+        <% end %>
+    <div class="dropdown-divider"></div>
+    <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+  </div>
+</div>
+
+
