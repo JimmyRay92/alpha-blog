@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_065416) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_20_070139) do
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -30,7 +30,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_065416) do
 
   create_table "styles", force: :cascade do |t|
     t.string "name"
-    t.boolean "speciality"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -47,6 +46,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_065416) do
     t.index ["user_id"], name: "index_teachers_on_user_id"
   end
 
+  create_table "teachers_styles", force: :cascade do |t|
+    t.integer "teacher_id", null: false
+    t.integer "style_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["style_id"], name: "index_teachers_styles_on_style_id"
+    t.index ["teacher_id"], name: "index_teachers_styles_on_teacher_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -58,4 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_065416) do
   add_foreign_key "bookings", "teachers"
   add_foreign_key "bookings", "users"
   add_foreign_key "teachers", "users"
+  add_foreign_key "teachers_styles", "styles"
+  add_foreign_key "teachers_styles", "teachers"
 end
