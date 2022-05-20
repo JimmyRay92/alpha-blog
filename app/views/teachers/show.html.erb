@@ -1,0 +1,58 @@
+<%# A single Teacher Profile listing %>
+<div class="row no gutters">
+  <%# Profile Photo %>
+  <div class="col-sm-4">
+    <%= image_tag @teacher.picture, class: "img-fluid" if @teacher.picture.attached? %>
+  </div>
+
+  <%# All Profile Info %>
+  <div class="col-sm-8">
+
+    <%# Specialities %>
+    <h2><%= @teacher.user.fullname %></h2>
+    <% @teacher.teachers_styles.each do |style| %> 
+      <% if style.speciality == true %>
+        <b>Speciality:</b> <%= style.style.name %><br>
+      <% end %>
+    <% end %>
+
+    <%# Other Styles %>
+    <b>Other Styles:</b>
+    <% @teacher.teachers_styles.each do |style| %> 
+      <% if style.speciality == false %>
+        <%= style.style.name %>, 
+      <% end %>
+    <% end %><br>
+    <%# Other small information %>
+    <b>Availability:</b> <%= @teacher.availability %><br>
+    <b>Price:</b> $<%= @teacher.price %><br>
+    <b>Lesson Length:</b> <%= @teacher.lesson_length %> mins
+    <br>
+    <%# Purchase Lesson button: Only to be shown if a user is signed in %>
+    <% if user_signed_in? %>
+
+      <%# Link to Stripe for payment %>
+      <button type="button" class="btn btn-success"><%= link_to 'Purchase A Lesson', "", id: "stripe" %></button>
+      
+
+    <% else %>
+      <p>(User must have an account and be logged-in to purchase a lesson)</p>
+    <% end %>
+  </div>
+</div>
+
+<%# Bulky Info %>
+<div class="row">
+  <div class="col-sm-12">
+    <h5>Biography:</h5>
+    <p><%= @teacher.bio %></p>
+    <h5>Teaching Info:</h5>
+    <p><%= @teacher.teaching_info %></p>
+  </div>
+</div>
+
+<div>
+  <%= link_to 'Back', teachers_path %>
+</div>
+
+<%= javascript_pack_tag "stripe" %>

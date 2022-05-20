@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_13_122851) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_20_064238) do
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -19,11 +19,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_122851) do
     t.integer "user_id"
   end
 
+  create_table "teachers", force: :cascade do |t|
+    t.text "availability"
+    t.integer "price"
+    t.integer "lesson_length"
+    t.text "bio"
+    t.text "teaching_info"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_teachers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
+  add_foreign_key "teachers", "users"
 end

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  availability: MyText
+  price: 1
+  lesson_length: 1
+  bio: MyText
+  teaching_info: MyText
+  user: one
+
+two:
+  availability: MyText
+  price: 1
+  lesson_length: 1
+  bio: MyText
+  teaching_info: MyText
+  user: two

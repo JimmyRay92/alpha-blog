@@ -1,0 +1,59 @@
+<div class="row">
+
+    <%# Side bar displaying all Styles %>
+    <div class="col-sm-3">
+    <h2>Styles</h2>
+
+    <%# Form for filtering profiles by style. All styles are displayed as checkboxes and multiple styles can be selected. %>
+    <div class="form-check">
+    <%= form_with model: @style, url: teachers_path, method: :get, class: "form-check", local: true do |form| %>
+      <div>
+        <%= form.collection_check_boxes :name, Style.all, :id, :name %>
+      </div>
+      <div>
+        <%= form.submit "Filter Styles" %> 
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+    <%# Main area displaying all teacher profiles %>
+    <div class="col-sm-9">
+
+      <%# Teacher Profile cards. Lists all profiles currently in the database %>
+      <% @teachers.each do |teacher| %>
+
+      <div class="card mb-3">
+        <div class="row no-gutters">
+        
+          <div class="col-md-4">
+            <%= image_tag teacher.picture, class: "img-fluid" if teacher.picture.attached? %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h4 class="card-title"><%= link_to teacher.user.fullname, teacher_path(teacher) %></h4><br>
+                  <%# Displays the profiles speciality style %>
+                  <% teacher.teachers_styles.each do |style| %> 
+                    <% if style.speciality == true %>
+                      <b>Speciality:</b> <%= style.style.name %><br>
+                    <% end %>
+                  <% end %>
+                  <%# Displays the profiles other styles %>
+                  <b>Other Styles:</b>
+                  <% teacher.teachers_styles.each do |style| %> 
+
+                    <% if style.speciality == false %>
+                      <%= style.style.name %>, 
+                    <% end %>
+
+                  <% end %><br>
+                  <b>Availability:</b> <%= teacher.availability %><br>
+                  <b>Bio:</b> <%= teacher.bio %>
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+        <% end %>
+    </div>
+</div>
