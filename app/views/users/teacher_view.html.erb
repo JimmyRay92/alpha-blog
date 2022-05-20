@@ -1,0 +1,38 @@
+<%# View when user selects 'Teacher' from drop-down menu %>
+<div class="row">
+  <%# Side Links %>
+  <div class="col-sm-3">
+    <div>
+      <%= link_to 'View Profile', teacher_path(current_user.teacher.id) %><br>
+      <%= link_to 'Edit Profile', edit_teacher_path(current_user.teacher.id) %><br>
+      <%= link_to 'Delete Profile', teacher_path(current_user.teacher.id), method: :delete, data: { confirm: "Are you sure you want to delete your Teacher Profile?" } %>
+    </div>
+  </div>
+  <%# Main Section %>
+  <div class="col-sm-9">
+    <div>
+      <h1><%= current_user.fullname %></h1>
+      <h6><%= current_user.email  %></h6>
+    </div>
+    <hr>
+    <div>
+      <div>
+        <h2>Upcoming Teacher Lessons</h2>
+        <hr>
+      </div>
+
+      <%# All guitar lessons User has as a Teacher %>
+      <div>
+        <% current_user.teacher.bookings.each do |booking| %>
+          <p>
+            <b>Name: </b> <%= booking.user.fullname %><br>
+            <b>Email: </b> <%= booking.user.email %><br>
+            <b>Price: </b>$<%= booking.teacher.price %><br>
+            <b>Lesson Length: </b><%= booking.teacher.lesson_length %> mins<br>
+            <hr>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
